@@ -2,7 +2,7 @@ import torch
 import os
 import time
 import datetime
-
+import wandb
 
 import torch.nn as nn
 
@@ -68,10 +68,16 @@ def DanQ_train(args, logger):
                 os.remove(max_acc_path)
             max_acc_path = save_best_model(args, epoch, model, max_acc, optimizer, lr_scheduler, logger, save_all=False,
                                            save_threshold=args.save_threshold)
-        logger.info(f'Max Acc: {max_acc * 100.0:.2f}%, Current Valid Acc: {test_acc * 100.0:.2f}%, Current Train Acc: {train_acc * 100.0:.2f}%')
+        logger.info(
+            f'Max Acc: {max_acc * 100.0:.2f}%, Current Valid Acc: {test_acc * 100.0:.2f}%, Current Train Acc: {train_acc * 100.0:.2f}%')
         if early_stopping.step(test_acc):
             print('Early Stopped!!!!')
             break
+
+        wandb.log(
+            {'test_acc': test_acc, 'test_loss': test_loss, 'max_acc': max_acc, 'train_loss': train_loss,
+             'train_acc': train_acc, 'grad_norm': grad_norm, 'lr': lr, 'epoch': epoch})
+
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
     logger.info('Training time {}'.format(total_time_str))

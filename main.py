@@ -19,6 +19,10 @@ print_commandline(args)
 # set seed
 set_seed(args.seed)
 
+# set wandb
+wandb.init(config=args, project="DNA_sequence_function_prediction", allow_val_change=True,
+           dir=args.output, name=DESCRIPTION)
+
 # start training
 print('=-------------------training-------------------------=')
 from trainer import DanQ_train
