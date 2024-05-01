@@ -77,7 +77,8 @@ def DanQ_train(args, logger):
         wandb.log(
             {'test_acc': test_acc, 'test_loss': test_loss, 'max_acc': max_acc, 'train_loss': train_loss,
              'train_acc': train_acc, 'grad_norm': grad_norm, 'lr': lr, 'epoch': epoch})
-
+    last_epoch_model_path = save_best_model(args, epoch, model, max_acc, optimizer, lr_scheduler, logger, save_all=False,
+                                   save_threshold=args.save_threshold)
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
     logger.info('Training time {}'.format(total_time_str))
