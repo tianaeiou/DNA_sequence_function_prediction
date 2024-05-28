@@ -29,7 +29,7 @@ parser.add_argument('--auto_resume', type=bool, default=False,
 # ----------------------------------------------------------------------------------------------------
 parser.add_argument('--batch_size', type=int, default=100, help='batch size')
 parser.add_argument('--learning_rate', type=float, default=0.001, help='lr')
-parser.add_argument('--num_epochs', type=int, default=1000, help='epoch')
+parser.add_argument('--num_epochs', type=int, default=60, help='epoch')
 parser.add_argument('--start_epoch', type=int, default=0)
 parser.add_argument('--num_workers', type=int, default=0, help='Number of workers used during the training.')
 parser.add_argument('--print_freq', type=int, default=10, help='print metric freq')
